@@ -17,7 +17,7 @@ final class CurrencyViewModel: ObservableObject {
         let urlforValutes = "https://api.exchangerate.host/latest?"
         if let url = URL(string: urlforValutes) {
             if let data = try? await network.getData(from: url) {
-                arrayValutes = data.rates.map {$0.key}
+                arrayValutes = data.rates.map {$0.key}.sorted { $0 < $1 }
                 return arrayValutes
             }
         }
