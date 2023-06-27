@@ -31,6 +31,13 @@ struct ContentView: View {
                         .transition(.opacity)
                 } else {
                     VStack {
+                        
+                        Text("Currency converter")
+                            .font(.system(size: 34, weight: .semibold, design: .rounded))
+                            .foregroundColor(Color(.darkGray))
+                            .padding(.top, 50)
+                        
+                        
                         HStack {
                             Text("Enter amount:")
                                 .font(.system(size: 16, weight: .medium))
@@ -48,6 +55,8 @@ struct ContentView: View {
                         }
                         .foregroundColor(Color(.darkGray))
                         .padding(.horizontal, 10)
+                        .padding(.bottom, 20)
+                        .padding(.top, 170)
                         
                         
                         HStack {
@@ -80,9 +89,11 @@ struct ContentView: View {
                             .tint(Color(.darkGray))
                         }
                         .foregroundColor(Color(.darkGray))
+                        .padding(.bottom, 20)
                         
                         Button {
                             Task {
+                                isFocused = false
                                 if let double = Double(fromAmount) {
                                     if let amount = await viewModel.getResult(from: fromValute, to: toValute, amount: double) {
                                         result = String(format: "%.2f", amount)
@@ -99,14 +110,15 @@ struct ContentView: View {
                         .buttonStyle(.bordered)
                         .cornerRadius(20)
                         .backgroundStyle(Color(.systemGray2))
+                        .padding(.bottom, 20)
                         
                         HStack {
                             if result != "" {
                                 Text(result)
-                                    .font(.system(size: 20, weight: .medium))
+                                    .font(.system(size: 24, weight: .medium))
                                 
                                 Text(toValute)
-                                    .font(.system(size: 20, weight: .light))
+                                    .font(.system(size: 24, weight: .light))
                             }
                         }
                     }
@@ -117,6 +129,7 @@ struct ContentView: View {
                     }, message: {
                         Text("Try one more time")
                     })
+                    Spacer()
                 }
             }
             .task {
